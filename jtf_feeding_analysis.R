@@ -15,7 +15,6 @@ library(cmdstanr)
 #-----
 # 2: Loading data
 #-----
-#load("input.RData")
 load("input_jtf.RData")
 ls()
 
