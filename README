@@ -1,7 +1,10 @@
-This reprository contains all the code related to our work "Size-independent, between-individual variability in feed ingestion rate in European seabass 
-(Dicentrarchus labrax)", by Joaquim Tomàs-Ferrer, Irene Moro-Martínez, Enrique Massutí-Pascual, Amàlia Grau and Miquel Palmer.
-
-The R script jtf_feeding_analysis (and the input data file input_jtf.RData) are designed for analysing the effect of several parameters on fish feeding rates using 
+This repository contains all the code related to our work &quot;Size-
+independent, between-individual variability in feed ingestion rate in
+European seabass(Dicentrarchus labrax)&quot;, by Joaquim Tomàs-Ferrer, Irene
+Moro-Martínez, Enrique Massutí-Pascual, Amàlia Grau and Miquel Palmer.
+The R script jtf_feeding_analysis (and the input data file
+input_jtf.RData) are designed for analyzing the effect of several
+parameters on fish feeding rates using
 feeding trials observed data. This script contains several steps:
 
 1. Loading libraries
@@ -11,12 +14,11 @@ feeding trials observed data. This script contains several steps:
 3. STAN model specification
 The script writes a Stan model into a file named model.stan.
 
-4. Prioirs and initial values
+4. Priors and initial values
 
-4. Compiling and running the model
+5. Compiling and running the model
 
 6. Saving the output
 
 7. Exploring results
 
-7. Results summary
