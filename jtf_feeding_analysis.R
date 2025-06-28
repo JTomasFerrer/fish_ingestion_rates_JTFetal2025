@@ -1,3 +1,43 @@
+
+2 de 10
+Esborrany article Ingestion Rate
+Safata d'entrada
+
+Joaquim Tomàs Ferrer
+Fitxers adjunts9 de juny 2025 10:46
+Bon dia, A la fi tenc un esborrany de s'article d'ingesta lo suficientment madur com perquè pugui passar una ronda de revisions entre tots es coautors. Aquí vos
+14
+
+Joaquim Tomàs Ferrer
+23 de juny 2025 13:11 (fa 5 dies)
+Ok, afegesc en Pablo a sa llista de suggested reviewers. Ho pujam des des teu compte (ho puc fer jo si me dones ses teves credencials) o me faig un compte jo? M
+
+MIGUEL PALMER VIDAL
+Fitxers adjunts
+23 de juny 2025 13:40 (fa 5 dies)
+per a mi
+
+Hola,
+
+Adjunt petites modificacions al supp material (ok amb el nous 
+exemples!) i al readme del github (alguns typos).
+
+El codi de R (jtf_feeding_analysis.R) no funcionava perquè hi havia 
+NAs. Ho he modificat, però has de fer un run i comprovar que te surt 
+el mateix que el paper (descomptades petites desviacions degudes a que 
+el procés d'estima de paràmetres és heurístic).
+
+Respecte a la submissió, revisa el link al seminari de PROA que t'he 
+enviat abans. Com ara ets csic, crec que tu pots ser corresponding 
+author. Si és així tira endavant com a corresponding author. Però molt 
+alerta en seguir les instruccions específiques per a plosone (al 
+seminari PROA i a la plana de submissio de plosone) per tal de no 
+haver de pagar.
+
+m
+
+ 3 fitxers adjunts
+  •  Escanejat per Gmail
 #---------------------------------------
 # Size-independent, between-individual variability in feed ingestion rate in 
 # European seabass (Dicentrarchus labrax)
@@ -37,6 +77,10 @@ ls()
 # diet [NC] diet level at each cage (1,2,3) (low, medium, large)
 # included [NR,NC] valid replicates (excluding 2 non-valid trials) 
 # last_row [NR,NC] number of pellets monitored at each trial
+
+# Changing NAs by -999
+NAs=which(is.na(CONSUMED),arr.ind = T)
+CONSUMED[NAs]=-999
 
 #-----       
 # 3: STAN model
@@ -157,93 +201,93 @@ generated quantities {
 sink()
 #-----
 
-# #-----
-# # 4: Priors and initial values
-# #-----
-# # priors
-# prior_beta = c(0.0, 100.0);
-# prior_beta_F_sd = c(0.5,5.0);
-# prior_beta_R_sd = c(0.2,5.0);
-# prior_beta_L2 = c(0.0, 5.0);
-# prior_beta_T = c(0.0, 5.0);
-# prior_beta_T2 = c(0.0,5.0);
-# prior_beta_N = c(0.0,5.0);
-# prior_beta_TRAFFIC = c(0.0,5.0);
-# prior_beta_diet2 = c(0.0,5.0);
-# prior_beta_diet3 = c(0.0,5.0);
-# prior_beta_food = c(0.0,5.0);
-# 
-# n.chains = 2
-# initializer = function() list(
-#   "beta"=prior_beta[1],
-#   "beta_F_sd"=prior_beta_F_sd[1],
-#   "beta_F"=array(0,dim=c(NF,NC)),
-#   "beta_R_sd"=prior_beta_R_sd[1],
-#   "beta_R"=array(0,dim=c(NR,NC)), 
-#   "beta_L2"=prior_beta_L2[1],
-#   #"beta_T"=prior_beta_T[1],
-#   #"beta_T2"=prior_beta_T2[1],
-#   "beta_TRAFFIC"=prior_beta_TRAFFIC[1],
-#   "beta_diet2"=prior_beta_diet2[1],
-#   "beta_diet3"=prior_beta_diet3[1],
-#   "beta_food"=prior_beta_food[1]
-# )
-# inits = list()
-# for (chain in 1:n.chains) inits[[chain]] = initializer()
-# 
-# #-----
-# # 5: compiling and running the model
-# #-----
-# mod = cmdstan_model("model.stan")
-# 
-# fit = mod$sample(
-#   data =list (
-#     NF=NF,
-#     NR=NR,
-#     NC=NC,
-#     consumed=CONSUMED,
-#     L2=(L2-mean(L2))/sd(L2),
-#     #L2=(weight-mean(weight))/sd(weight),
-#     temperature=(temperature-mean(temperature))/sd(temperature),
-#     traffic=(TRAFFIC-mean(TRAFFIC))/sd(TRAFFIC),
-#     diet=diet,
-#     #food=(last_row-mean(last_row))/sd(last_row),
-#     food=(food-mean(food))/sd(food),
-#     included=included,
-#     prior_beta = prior_beta,
-#     prior_beta_F_sd = prior_beta_F_sd,
-#     prior_beta_R_sd = prior_beta_R_sd,
-#     prior_beta_L2 = prior_beta_L2,
-#     prior_beta_T = prior_beta_T,
-#     prior_beta_T2 = prior_beta_T2,
-#     prior_beta_TRAFFIC = prior_beta_TRAFFIC,
-#     prior_beta_diet2 = prior_beta_diet2,
-#     prior_beta_diet3 = prior_beta_diet3,
-#     prior_beta_food = prior_beta_food
-#   ),
-#   chains = n.chains,
-#   parallel_chains = n.chains,
-#   iter_warmup = 2000,
-#   iter_sampling = 2000,
-#   init = inits,
-#   max_treedepth = 12,
-#   adapt_delta = 0.8
-# )
-# 
-# #-----
-# # 6: saving output
-# #-----
-# fit$save_object(file = paste("analysis_jtf",".RDS",sep=""))
-# sink(file = paste("analysis_jtf",".txt",sep=""))
-# fit$cmdstan_diagnose()
-# sink()
-# file.rename("model.stan",paste("analysis_jtf","model.R",sep=""))
-# #-----
-# 
-# #-----
-# # 7: Exploring results: 
-# #-----
-# # remove(list=ls())
-# fit = readRDS("analysis_jtf.RDS")  # Results from Analysis.R script
-# fit$time()
-# draws=fit$draws(format="matrix")
+#-----
+# 4: Priors and initial values
+#-----
+# priors
+prior_beta = c(0.0, 100.0);
+prior_beta_F_sd = c(0.5,5.0);
+prior_beta_R_sd = c(0.2,5.0);
+prior_beta_L2 = c(0.0, 5.0);
+prior_beta_T = c(0.0, 5.0);
+prior_beta_T2 = c(0.0,5.0);
+prior_beta_N = c(0.0,5.0);
+prior_beta_TRAFFIC = c(0.0,5.0);
+prior_beta_diet2 = c(0.0,5.0);
+prior_beta_diet3 = c(0.0,5.0);
+prior_beta_food = c(0.0,5.0);
+
+n.chains = 2
+initializer = function() list(
+  "beta"=prior_beta[1],
+  "beta_F_sd"=prior_beta_F_sd[1],
+  "beta_F"=array(0,dim=c(NF,NC)),
+  "beta_R_sd"=prior_beta_R_sd[1],
+  "beta_R"=array(0,dim=c(NR,NC)),
+  "beta_L2"=prior_beta_L2[1],
+  #"beta_T"=prior_beta_T[1],
+  #"beta_T2"=prior_beta_T2[1],
+  "beta_TRAFFIC"=prior_beta_TRAFFIC[1],
+  "beta_diet2"=prior_beta_diet2[1],
+  "beta_diet3"=prior_beta_diet3[1],
+  "beta_food"=prior_beta_food[1]
+)
+inits = list()
+for (chain in 1:n.chains) inits[[chain]] = initializer()
+
+#-----
+# 5: compiling and running the model
+#-----
+mod = cmdstan_model("model.stan")
+
+fit = mod$sample(
+  data =list (
+    NF=NF,
+    NR=NR,
+    NC=NC,
+    consumed=CONSUMED,
+    L2=(L2-mean(L2))/sd(L2),
+    #L2=(weight-mean(weight))/sd(weight),
+    temperature=(temperature-mean(temperature))/sd(temperature),
+    traffic=(TRAFFIC-mean(TRAFFIC))/sd(TRAFFIC),
+    diet=diet,
+    #food=(last_row-mean(last_row))/sd(last_row),
+    food=(food-mean(food))/sd(food),
+    included=included,
+    prior_beta = prior_beta,
+    prior_beta_F_sd = prior_beta_F_sd,
+    prior_beta_R_sd = prior_beta_R_sd,
+    prior_beta_L2 = prior_beta_L2,
+    prior_beta_T = prior_beta_T,
+    prior_beta_T2 = prior_beta_T2,
+    prior_beta_TRAFFIC = prior_beta_TRAFFIC,
+    prior_beta_diet2 = prior_beta_diet2,
+    prior_beta_diet3 = prior_beta_diet3,
+    prior_beta_food = prior_beta_food
+  ),
+  chains = n.chains,
+  parallel_chains = n.chains,
+  iter_warmup = 2000,
+  iter_sampling = 2000,
+  init = inits,
+  max_treedepth = 12,
+  adapt_delta = 0.8
+)
+
+#-----
+# 6: saving output
+#-----
+fit$save_object(file = paste("analysis_jtf",".RDS",sep=""))
+sink(file = paste("analysis_jtf",".txt",sep=""))
+fit$cmdstan_diagnose()
+sink()
+file.rename("model.stan",paste("analysis_jtf","model.R",sep=""))
+#-----
+
+#-----
+# 7: Exploring results:
+#-----
+# remove(list=ls())
+fit = readRDS("analysis_jtf.RDS")  # Results from Analysis.R script
+fit$time()
+draws=fit$draws(format="matrix")
